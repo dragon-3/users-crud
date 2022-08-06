@@ -1,0 +1,11 @@
+.top {
+    text-align: right;
+    margin-right: 100px;
+    margin-bottom: 100px;
+    color: blue;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
