@@ -36,7 +36,7 @@ class CreateComponent extends React.Component {
         return(
 
         
-            <div>
+            <div className="form">
                 <form action="">
                     <label htmlFor="">First Name:</label>
                     <input type="text" name="firstName" onChange={this.handleChange}/><br />
