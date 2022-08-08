@@ -1,14 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import HomeComponent from './HomeComponent';
-import CreateComponent from "./crud/CreateComponent";
+import CrudComponent from "./crud/CrudComponent";
 
 
 function App() {
   return (
     <div className="App">
       <HomeComponent />
-      <CreateComponent />
+      <CrudComponent />
     </div>
   );
 }
