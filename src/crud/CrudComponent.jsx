@@ -6,26 +6,33 @@ class CrudComponent extends React.Component {
     constructor() {
         super(); 
         this.state = {
-            firstName: "",
-            lastName: ""
+            // firstName: "",
+            // lastName: "",
+            // id: "",
+            // url: `http://localhost:3001/users/`
         }
     }
 
     
 
-    handleChange = (event) => {
-        event.preventDefault(); 
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
+    // handleChange = (event) => {
+    //     event.preventDefault(); 
+    //     this.setState({
+    //         [event.target.name]: event.target.value
+    //     })
+    // }
 
     //CRUD operations
-    createUser = () => {
-        const firstName = this.state.firstName;
-        const lastName = this.state.lastName;
-        axios.post(`https://f201a4cb-6177-4458-a75c-412cdc1e5069.mock.pstmn.io/crud`, {firstName, lastName})
-    }
+    // createUser = () => {
+    //     const firstName = this.state.firstName;
+    //     const lastName = this.state.lastName;
+    //     axios.post(this.state.url, {firstName, lastName})
+    // }
+
+    // deleteUser = () => {
+    //     const id = 
+    //     axios.delete(this.state.url/`${id}`)
+    // }
 
     // deleteUser = (id) => {
     //     axios.delete(`https://62eddc42a785760e677041dd.mockapi.io/crud/${id}`)
@@ -37,13 +44,13 @@ class CrudComponent extends React.Component {
 
         
             <div className="form">
-                <form action="">
+                {/* <form action="">
                     <label htmlFor="">First Name:</label>
                     <input type="text" name="firstName" onChange={this.handleChange}/><br />
                     <label htmlFor="">Last Name:</label>
                     <input type="text" name="lastName" onChange={this.handleChange}/><br />
                     <button type="text" onClick={this.createUser}>Submit</button>
-                </form>
+                </form> */}
                 
             </div>
             

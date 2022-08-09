@@ -1,7 +1,9 @@
 import React from "react";
 import "./Home.css";
 import axios from "axios";
+// import data from "./db.json"
 import CrudComponent from "./crud/CrudComponent";
+import dataService from "./crud/dataService";
 
 
 class HomeComponent extends React.Component {
@@ -9,15 +11,20 @@ class HomeComponent extends React.Component {
     constructor() {
         super(); 
         this.state = {
+            firstName: "",
+            lastName: "",
+            id: "",
             count: 0,
-            url: "https://62eddc42a785760e677041dd.mockapi.io/crud",
-            // url: `https://f201a4cb-6177-4458-a75c-412cdc1e5069.mock.pstmn.io/crud`,
-            // url: "https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=e7946f7765931c840a35548ad3fa50c4",
+            url: `http://localhost:3001/users`,
             data: []
         }
     }
 
-    getData = () => {
+    componentDidMount = () => {
+        this.refreshUsers();
+    }
+
+    refreshUsers = () => {
         axios.get(this.state.url).then((response) => {
             this.setState({
                 data: [response.data]
@@ -25,16 +32,25 @@ class HomeComponent extends React.Component {
         })
     }
 
-    componentDidMount = () => {
-        this.getData();
+    createUser = () => {
+        const firstName = this.state.firstName
+        const lastName = this.state.lastName
+        axios.post(this.state.url, {firstName, lastName})
     }
 
-    // deleteUser = (id) => {
-    //     axios.delete(`https://62eddc42a785760e677041dd.mockapi.io/crud/${id}`)
-    //     .then(() => {
-    //         this.getData();
-    //     })
-    // }
+    deleteUser = (id) => {
+        axios.delete(this.state.url/`${id}`)
+    }
+
+    
+    handleChange = (event) => {
+        event.preventDefault(); 
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
+    
 
     render() {
         return(
@@ -48,34 +64,35 @@ class HomeComponent extends React.Component {
                     <div className="table">
                         <table>
                             <thead>
-                                <th>City</th>
-                                <th>Weather</th>
+                                <th>First</th>
+                                <th>Last</th>
                                 <th>Actions</th>
-                                {/* <th>City</th>
-                                <th>Weather</th> */}
                             </thead>
                             <tbody>
 
-        
-                                
-
-                                {/* mock api data */}
                                 {
                                     this.state.data.map(
-                                        data => (
-                                            <tr key={data.id}>
-                                                <td>{data.firstName}</td>
-                                                <td>{data.lastName}</td>
-                                                <td>
-                                                    <button className="update-btn" >Update</button>
-                                                    <button className="delete-btn">DELETE</button>
-                                                </td>
-                                            </tr>
-                                            
+                                        users => (
+                                            users.map(
+                                                user => (
+                                                    
+                                                    <tr key={user.id}>
+                                                        <td>{user.firstName}</td>
+                                                        <td>{user.lastName}</td>
+                                                        <td>
+                                                            <button className="update-btn" >Update</button>
+                                                            <button className="delete-btn" onClick={this.deleteUser(id)}>DELETE</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )
                                         )
                                     )
                                 }
+                                
 
+                                
+                                {/* weather data api */}
                                 {/* {this.state.data.map(
                                     data => (
                                             <tr key={data.id}>
@@ -107,6 +124,17 @@ class HomeComponent extends React.Component {
                                 
                     
                 </div>
+
+                <div className="form">
+                <form action="">
+                    <label htmlFor="">First Name:</label>
+                    <input type="text" name="firstName" onChange={this.handleChange}/><br />
+                    <label htmlFor="">Last Name:</label>
+                    <input type="text" name="lastName" onChange={this.handleChange}/><br />
+                    <button type="text" onClick={this.createUser}>Submit</button>
+                </form>
+                
+            </div>
                 
             </div>
             
