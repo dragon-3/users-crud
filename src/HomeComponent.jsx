@@ -38,9 +38,9 @@ class HomeComponent extends React.Component {
         axios.post(this.state.url, {firstName, lastName})
     }
 
-    deleteUser = (id) => {
-        axios.delete(this.state.url/`${id}`)
-    }
+    // deleteUser = (id) => {
+    //     axios.delete(this.state.url/`${id}`)
+    // }
 
     
     handleChange = (event) => {
@@ -81,7 +81,7 @@ class HomeComponent extends React.Component {
                                                         <td>{user.lastName}</td>
                                                         <td>
                                                             <button className="update-btn" >Update</button>
-                                                            <button className="delete-btn" onClick={this.deleteUser(id)}>DELETE</button>
+                                                            <button className="delete-btn">DELETE</button>
                                                         </td>
                                                     </tr>
                                                 )
