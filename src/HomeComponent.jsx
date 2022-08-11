@@ -4,6 +4,8 @@ import axios from "axios";
 // import data from "./db.json"
 import CrudComponent from "./crud/CrudComponent";
 import dataService from "./crud/dataService";
+import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
+import EditDataComponent from "./EditDataComponent";
 
 
 class HomeComponent extends React.Component {
@@ -13,9 +15,9 @@ class HomeComponent extends React.Component {
         this.state = {
             firstName: "",
             lastName: "",
-            id: "",
             count: 0,
             url: `http://localhost:3001/users/`,
+            visible: false,
             data: []
         }
     }
@@ -43,6 +45,20 @@ class HomeComponent extends React.Component {
         .then(() => {
             this.refreshUsers();
         })
+    }
+
+    updateUser = (id) => {
+        if (this.state.visible == false) {
+            this.setState({
+                visible: true
+            })
+        }
+        else {
+            this.setState({
+                visible: false
+            })
+        }
+
     }
 
     
@@ -83,7 +99,7 @@ class HomeComponent extends React.Component {
                                                         <td>{user.firstName}</td>
                                                         <td>{user.lastName}</td>
                                                         <td>
-                                                            <button className="update-btn" >Update</button>
+                                                            <button className="update-btn" onClick={this.updateUser}>Update</button>
                                                             <button className="delete-btn" onClick={() => this.deleteUser(user.id)}>DELETE</button>
                                                         </td>
                                                     </tr>
@@ -129,17 +145,31 @@ class HomeComponent extends React.Component {
                 </div>
 
                 <div className="form">
-                <form action="">
-                    <label htmlFor="">First Name:</label>
-                    <input type="text" name="firstName" onChange={this.handleChange}/><br />
-                    <label htmlFor="">Last Name:</label>
-                    <input type="text" name="lastName" onChange={this.handleChange}/><br />
-                    <button type="text" onClick={this.createUser}>Submit</button>
-                </form>
+
+                    {
+                        this.state.visible ? "" :
+                        <form action="">
+                        <label htmlFor="">First Name:</label>
+                        <input type="text" name="firstName" onChange={this.handleChange}/><br />
+                        <label htmlFor="">Last Name:</label>
+                        <input type="text" name="lastName" onChange={this.handleChange}/><br />
+                        <button type="text" onClick={this.createUser}>Submit</button>
+                        </form>
+                    }
+                        
+                    
+                </div>
+
+                <div>
+                    {
+                        this.state.visible ? 
+                        <EditDataComponent /> : ""
+                    
+                    }
+                </div>
                 
             </div>
                 
-            </div>
             
         )
     }
