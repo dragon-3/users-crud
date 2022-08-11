@@ -15,7 +15,7 @@ class HomeComponent extends React.Component {
             lastName: "",
             id: "",
             count: 0,
-            url: `http://localhost:3001/users`,
+            url: `http://localhost:3001/users/`,
             data: []
         }
     }
@@ -38,9 +38,12 @@ class HomeComponent extends React.Component {
         axios.post(this.state.url, {firstName, lastName})
     }
 
-    // deleteUser = (id) => {
-    //     axios.delete(this.state.url/`${id}`)
-    // }
+    deleteUser = (id) => {
+        axios.delete(this.state.url + `${id}`)
+        .then(() => {
+            this.refreshUsers();
+        })
+    }
 
     
     handleChange = (event) => {
@@ -81,7 +84,7 @@ class HomeComponent extends React.Component {
                                                         <td>{user.lastName}</td>
                                                         <td>
                                                             <button className="update-btn" >Update</button>
-                                                            <button className="delete-btn">DELETE</button>
+                                                            <button className="delete-btn" onClick={() => this.deleteUser(user.id)}>DELETE</button>
                                                         </td>
                                                     </tr>
                                                 )
