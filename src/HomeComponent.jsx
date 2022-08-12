@@ -19,7 +19,7 @@ class HomeComponent extends React.Component {
         this.state = {
             firstName: "",
             lastName: "",
-            id: this.props.match.params.id,
+            id: "",
             count: 0,
             url: `http://localhost:3001/users/`,
             visible: false,
