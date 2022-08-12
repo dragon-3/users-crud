@@ -1,40 +1,52 @@
 import React from "react";
 import "./Home.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 // import data from "./db.json"
 import CrudComponent from "./crud/CrudComponent";
 import dataService from "./crud/dataService";
 import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
 import EditDataComponent from "./EditDataComponent";
+import UpdateComponent from "./crud/UpdateComponent";
+import {withRouter} from 'react-router-dom';
+
 
 
 class HomeComponent extends React.Component {
 
-    constructor() {
-        super(); 
+    constructor(props) {
+        super(props); 
         this.state = {
             firstName: "",
             lastName: "",
+            id: this.props.match.params.id,
             count: 0,
             url: `http://localhost:3001/users/`,
             visible: false,
             data: []
         }
+
     }
 
-    componentDidMount = () => {
+    componentDidMount = (props) => {
         this.refreshUsers();
+        console.log(this.props)
+
     }
 
     refreshUsers = () => {
-        axios.get(this.state.url).then((response) => {
+        axios.get(this.state.url)
+        .then((response) => {
             this.setState({
                 data: [response.data]
             })
         })
     }
 
+    //crud operations
+
     createUser = () => {
+        
         const firstName = this.state.firstName
         const lastName = this.state.lastName
         axios.post(this.state.url, {firstName, lastName})
@@ -47,7 +59,7 @@ class HomeComponent extends React.Component {
         })
     }
 
-    updateUser = (id) => {
+    showUpdateForm = (id) => {
         if (this.state.visible == false) {
             this.setState({
                 visible: true
@@ -58,8 +70,17 @@ class HomeComponent extends React.Component {
                 visible: false
             })
         }
-
     }
+
+    updateUserClicked = (id) => {
+        this.props.history.push(`${id}`)
+    } 
+
+    // onClickUpdate = () => {
+    //     <Link to ="/update"/>
+    // }
+
+    
 
     
     handleChange = (event) => {
@@ -99,7 +120,8 @@ class HomeComponent extends React.Component {
                                                         <td>{user.firstName}</td>
                                                         <td>{user.lastName}</td>
                                                         <td>
-                                                            <button className="update-btn" onClick={this.updateUser}>Update</button>
+                                                            <button className="update-btn" onClick={() => this.updateUserClicked(user.id)}>Update</button>
+                                                            {/* <button className="update-btn" onClick={() => this.updateUser(user.id)}>Update</button> */}
                                                             <button className="delete-btn" onClick={() => this.deleteUser(user.id)}>DELETE</button>
                                                         </td>
                                                     </tr>
@@ -108,34 +130,6 @@ class HomeComponent extends React.Component {
                                         )
                                     )
                                 }
-                                
-
-                                
-                                {/* weather data api */}
-                                {/* {this.state.data.map(
-                                    data => (
-                                            <tr key={data.id}>
-                                                <td>{data.name}</td>
-                                                    {
-                                                        data.weather.map(
-                                                            weather => (
-                                                                <td>{weather.description}</td> 
-                                                                
-
-                                                            )
-                                                        )
-                                                        
-                                                    }
-                                                    <td>
-                                                    <button className="update-btn" >Update</button>
-                                                    <button className="delete-btn" >DELETE</button>
-                                                    
-                                                </td>
-                                            </tr>
-                                            
-                                        )
-                                    )
-                                } */}
                                 
                             </tbody>
                         </table>
@@ -147,7 +141,7 @@ class HomeComponent extends React.Component {
                 <div className="form">
 
                     {
-                        this.state.visible ? "" :
+                        // this.state.visible ? "" :
                         <form action="">
                         <label htmlFor="">First Name:</label>
                         <input type="text" name="firstName" onChange={this.handleChange}/><br />
@@ -160,13 +154,24 @@ class HomeComponent extends React.Component {
                     
                 </div>
 
-                <div>
+                {/* <div>
                     {
                         this.state.visible ? 
-                        <EditDataComponent /> : ""
-                    
+                        <div>
+                            <form action="">
+                                <p>Update</p>
+                                <label htmlFor="">First Name:</label>
+                                <input type="text" name="firstName" onChange={this.handleChange}/><br />
+                                <label htmlFor="">Last Name:</label>
+                                <input type="text" name="lastName" onChange={this.handleChange}/><br />
+                                <button type="text" onClick={this.updateUser}>Submit</button>
+                            </form>
+                        </div> 
+                        
+                        : ""
+                                
                     }
-                </div>
+                </div> */}
                 
             </div>
                 
@@ -177,4 +182,4 @@ class HomeComponent extends React.Component {
 
 }
 
-export default HomeComponent;
+export default withRouter(HomeComponent);
