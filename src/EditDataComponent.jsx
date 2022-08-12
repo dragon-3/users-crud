@@ -55,21 +55,21 @@ class EditDataComponent extends React.Component {
     //     })
     // }
 
+    handleChange = (event) => {
+        event.preventDefault(); 
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
 
     render() {
         return (
             <div>
-                <form action="">
-                    <p>Update</p>
-                    <label htmlFor="">First Name:</label>
-                    <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange}/><br />
-                    <label htmlFor="">Last Name:</label>
-                    <input type="text" name="lastName" onChange={this.handleChange}/><br />
-                    <button type="text" onClick={this.updateUser}>Submit</button>
-                </form>
+                edit data
             </div>
         )
     }
 }
 
-export default withRouter(EditDataComponent)
+export default EditDataComponent

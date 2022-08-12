@@ -6,8 +6,12 @@
 //         return axios.get("http://localhost:3001/users/");
 //     }
 
-//     creatUser() {
-//         return axios.post("http://localhost:3001/users", updateFields);
+//     creatUser(firstName, lastName) {
+//         return axios.post("http://localhost:3001/users/", {firstName, lastName});
+//     }
+
+//     deleteUser(id) {
+//         return axios.delete("http://localhost:3001/users/" + `${id}`)
 //     }
 // }
 
