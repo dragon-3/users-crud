@@ -8,7 +8,7 @@ import dataService from "./crud/dataService";
 import { toHaveAccessibleDescription } from "@testing-library/jest-dom/dist/matchers";
 import EditDataComponent from "./EditDataComponent";
 import UpdateComponent from "./crud/UpdateComponent";
-import {withRouter} from 'react-router-dom';
+import {withRouter, Navigation} from 'react-router-dom';
 
 
 
@@ -28,9 +28,8 @@ class HomeComponent extends React.Component {
 
     }
 
-    componentDidMount = (props) => {
+    componentDidMount = () => {
         this.refreshUsers();
-        console.log(this.props)
 
     }
 
@@ -72,9 +71,9 @@ class HomeComponent extends React.Component {
         }
     }
 
-    updateUserClicked = (id) => {
-        this.props.history.push(`${id}`)
-    } 
+    // updateUserClicked = (id) => {
+    //     this.props.history.push(`${id}`)
+    // } 
 
     // onClickUpdate = () => {
     //     <Link to ="/update"/>
@@ -120,7 +119,7 @@ class HomeComponent extends React.Component {
                                                         <td>{user.firstName}</td>
                                                         <td>{user.lastName}</td>
                                                         <td>
-                                                            <button className="update-btn" onClick={() => this.updateUserClicked(user.id)}>Update</button>
+                                                        <Link to={`${user.id}`}><button className="update-btn"  >Update</button></Link>
                                                             {/* <button className="update-btn" onClick={() => this.updateUser(user.id)}>Update</button> */}
                                                             <button className="delete-btn" onClick={() => this.deleteUser(user.id)}>DELETE</button>
                                                         </td>
@@ -182,4 +181,4 @@ class HomeComponent extends React.Component {
 
 }
 
-export default withRouter(HomeComponent);
+export default HomeComponent;
