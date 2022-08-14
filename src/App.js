@@ -16,13 +16,11 @@ function App() {
   return (
       <div className="App">
       <Router>
-        <>
-          <Switch>
+        <Routes>
           
-            <Route path="/:id" exact component={UpdateComponent} /> 
-            <Route path="/" component={HomeComponent} />
-            </Switch>
-        </>
+            <Route path="/:id" element={<UpdateComponent />} /> 
+            <Route path="/" element={<HomeComponent />} />
+            </Routes>
       </Router> 
       </div>
 
